@@ -1,6 +1,5 @@
 	# #同じディレクトリ内にあるファイルを読み込めるようにする
-	require_relative "player"
-	# require_relative "enemy"
+require_relative "player"
 module Game
 	class Director
 
@@ -9,10 +8,10 @@ module Game
 	    	@space.gravity = CP::Vec2.new(0, 0)
 			@fishes = []
 			@font = Font.new(32)
+			@score = 0
 			#　1から10までの数の金魚を発生させる
-
 			# (rand(9)+1).times do
-			1.times do
+			10.times do
 				fish = Fish.new(
 				  rand(600)+100,
 				  rand(400)+100,
@@ -29,8 +28,8 @@ module Game
 		     # 衝突個所（arb.points配列）から、先頭の1つを取得（複数個所ぶつかるケースもあり得るため配列になっている）
 		    	pos = arb.points.first.point
 		     # 衝突個所の座標に絵を表示（1フレームで消える点に留意）
-		     	fish_img = Image.load("images/kingyo.png")
-		    	Window.draw(pos.x, pos.y, fish_img)
+		     	#sound = Sound.new("適当なファイル")
+		    	#sound.play
 		    end
 	    end
 
@@ -40,8 +39,9 @@ module Game
 				fish.move
 				fish.draw
 			end
+			Window.draw_font(0,0, "スコア：#{@score}", @font)
 			@space.step( 1/ 60.0 )
-			scene_transition
+			#scene_transition
 		end
 
 	  	def draw

@@ -13,6 +13,8 @@ class Scene
 	end
 
 	def self.play
+		back_img = Image.load("images/back.png")
+		Window.draw(0,0,back_img)
 		@@scenes[@@current].play
 	end
 

@@ -3,23 +3,28 @@ class Fish < CPBox
 	COLLISION_TYPE = 10
 
 	def initialize(x, y, mass, e = 2, u = 0)		
-		image = Image.load("images/kingyo2.png")
+		image = Image.load("images/kingyo_top.png")
 		super x, y, image.width ,image.height ,mass, C_WHITE, e, u
 		self.x = x
 		self.y = y
 		@image = image
-		@body.apply_impulse(CP::Vec2.new(30,30), CP::Vec2.new(0,0))
+		@body.v = CP::Vec2.new(rand(300)-150,rand(300)-150)
+		#@body.apply_impulse(CP::Vec2.new(30,30), CP::Vec2.new(0,0))
 		# apply_force(30,30)と同じ意味
 		@shape.collision_type = self.class::COLLISION_TYPE 
  	end
 
 	def move
 	
-		num = rand(1)
-		if num == 0
-			apply_force(30, 30)
-		else 
-			apply_force(-30,-30)
+		
+		if @body.p.x > Window.width - 100
+			@body.v = CP::Vec2.new(rand(-300),rand(-300))
+		elsif @body.p.x <   100
+			@body.v = CP::Vec2.new(rand(300),rand(300))
+		elsif @body.p.y > Window.height - 100
+			@body.v = CP::Vec2.new(rand(100),-rand(300))
+		elsif @body.p.y < 100
+			@body.v = CP::Vec2.new(rand(300),rand(100))
 		end
 	end
 

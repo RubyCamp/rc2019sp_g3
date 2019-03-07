@@ -23,7 +23,7 @@ end
 
 class CPBase
 
-  def self.generate_walls(space, width = 800, height = 600, wall_width = 20)
+  def self.generate_walls(space, width = 600, height = 400, wall_width = 20)
     walls = []
     walls << CPStaticBox.new(0, height, width, height + wall_width)
     walls << CPStaticBox.new(-wall_width, 0, 0, height)

@@ -16,7 +16,6 @@ require_relative "scenes/game/director"
 Window.width = 800
 Window.height = 600
 
-scene = Scene.new
 
 Scene.add(Opening::Director.new, :opening)
 Scene.add(Game::Director.new, :game)
