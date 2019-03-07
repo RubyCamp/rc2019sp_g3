@@ -20,8 +20,13 @@ module Game
 			@loop_count = 0
 			@time = Time.now
 
-			image = Image.load("images/poi1.png")
-			@player= Player.new(30,300,50,10, image)
+			image1 = Image.load("images/poi1.png")
+			#別のところで使いたいのでインスタンス変数にしておく
+			@image2 = Image.load("images/poi2.png")
+
+			#通常のポイを作成
+			@player= Player.new(30,300,50,10, image1)
+
 			@space_poi.add(@player)
 			#　1から10までの数の金魚を発生させる
 			# (rand(9)+1).times do
@@ -52,17 +57,24 @@ module Game
 			@player.move
 			@player.draw
 
-			p @player.p
-
 			@fishes.each do |fish|
 			#　金魚を動かす
 				fish.move
 				fish.draw
-				p fish.p
-				p (@player.p - fish.p)
+			#　接触判定をしてみる
+				x = @player.body.p- fish.body.p
+				if x.length < 70
+
+				#ここでしか使わないのでローカル変数を使う
+					player2 = Player.new(@player.body.p.x-@player.r, @player.body.p.y-@player.r, 10, 50, @image2)
+					player2.draw
+					
+				end
 
 			end
 			Window.draw_font(0,0, "スコア：#{@score}, 時間:#{@limit_time}, #{@time}", @font)
+
+
 			@space_fish.step( 1/ 60.0 )
 			@space_poi.step (1 / 60.0 )
 			@loop_count += 1
