@@ -12,11 +12,11 @@ class Fish < CPBox
 		#@body.apply_impulse(CP::Vec2.new(30,30), CP::Vec2.new(0,0))
 		# apply_force(30,30)と同じ意味
 		@shape.collision_type = self.class::COLLISION_TYPE 
+		@caught = false
  	end
 
 	def move
 	
-		
 		if @body.p.x > Window.width - 100
 			@body.v = CP::Vec2.new(rand(-300),rand(-300))
 		elsif @body.p.x <   100
@@ -41,8 +41,12 @@ class Fish < CPBox
 	end
 
 	#　すくわれたときに画像を変換する
-	def image_when_caught
+	def caught
+		@caught = true
+	end
 
+	def caught?
+		@caught
 	end
 
 	private

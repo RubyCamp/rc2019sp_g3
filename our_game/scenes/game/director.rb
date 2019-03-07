@@ -58,33 +58,38 @@ module Game
 			@player.draw
 
 			@fishes.each do |fish|
-			#　金魚を動かす
-				fish.move
-				fish.draw
-			#　接触判定をしてみる
-				x = @player.body.p- fish.body.p
+				x = @player.body.p - fish.body.p
 				if x.length < 70
-
 				#ここでしか使わないのでローカル変数を使う
 					player2 = Player.new(@player.body.p.x-@player.r, @player.body.p.y-@player.r, 10, 50, @image2)
 					player2.draw
-					
+					if Input.key_down?(K_SPACE)#ボタンが押されたら
+						#金魚を消す処理
+						@score += 10
+						fish.caught
+						@space_fish.remove(fish)
+					end
 				end
-
+				fish.draw
+				fish.move
 			end
-			Window.draw_font(0,0, "スコア：#{@score}, 時間:#{@limit_time}, #{@time}", @font)
 
+			#fishesから削除
+			@fishes.reject! {|fish| fish.caught?}
 
-			@space_fish.step( 1/ 60.0 )
-			@space_poi.step (1 / 60.0 )
+			#スコアと時間の表示
+			Window.draw_font(0, 0, "スコア：#{@score}, 時間:#{@limit_time}, #{@time}", @font)
+
+			@space_fish.step( 1 / 60.0 )
+			@space_poi.step( 1 / 60.0 )
+
 			@loop_count += 1
 			if @loop_count % 30 == 0
 				@limit_time -= 1
-				if @limit_time == 0
-					
-				end
 			end
-			#scene_transition
+
+			#終了処理
+			scene_transition
 		end
 
 	  	def draw
@@ -93,7 +98,7 @@ module Game
 
 	  	private
 	  	def scene_transition
-      		Scene.move_to(:ending) unless @current
+      		Scene.move_to(:ending) if @limit_time == 0
     	end
 	end
 end

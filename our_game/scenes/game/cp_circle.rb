@@ -15,6 +15,10 @@ class CPCircle < CPBase
     shape.u = u
   end
 
+  def r
+    @r
+  end
+  
   def move
   end
 
