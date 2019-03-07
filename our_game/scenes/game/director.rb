@@ -17,20 +17,20 @@ module Game
 			@font = Font.new(32)
 			@score = 0
 			@limit_time = 100
-			@loop_count = 0
+			@loop_count = 1
 			@time = Time.now
 
-			image1 = Image.load("images/poi1.png")
+			@image1 = Image.load("images/poi1.png")
 			#別のところで使いたいのでインスタンス変数にしておく
 			@image2 = Image.load("images/poi2.png")
 
 			#通常のポイを作成
-			@player= Player.new(30,300,50,10, image1)
+			@player= Player.new(30,300,50,10, @image1)
 
 			@space_poi.add(@player)
 			#　1から10までの数の金魚を発生させる
 			# (rand(9)+1).times do
-			10.times do
+			20.times do
 				fish = Fish.new(
 				  rand(600)+100,
 				  rand(400)+100,
@@ -52,8 +52,8 @@ module Game
 		    end
 	    end
 
-		def play
-			
+		def play(score= nil)
+
 			@player.move
 			@player.draw
 
@@ -71,14 +71,14 @@ module Game
 					end
 				end
 				fish.draw
-				fish.move
+				fish.move(@loop_count)
 			end
 
 			#fishesから削除
 			@fishes.reject! {|fish| fish.caught?}
 
 			#スコアと時間の表示
-			Window.draw_font(0, 0, "スコア：#{@score}, 時間:#{@limit_time}, #{@time}", @font)
+			Window.draw_font(0, 0, "スコア：#{@score}, 時間:#{@limit_time}", @font)
 
 			@space_fish.step( 1 / 60.0 )
 			@space_poi.step( 1 / 60.0 )
@@ -98,7 +98,19 @@ module Game
 
 	  	private
 	  	def scene_transition
-      		Scene.move_to(:ending) if @limit_time == 0
+	  		if @score >= 70
+  				Scene.move_to(:ending, @score)
+  				@score = 0
+  				@limit_time = 100
+  				@player= Player.new(30,300,50,10, @image1)
+				@space_poi.add(@player)
+  			elsif @limit_time == 80
+				Scene.move_to(:bending, @score) 
+				@score = 0
+				@limit_time = 100
+				@player= Player.new(30,300,50,10, @image1)
+				@space_poi.add(@player)
+    		end
     	end
 	end
 end

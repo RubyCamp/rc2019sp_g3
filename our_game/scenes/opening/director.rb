@@ -5,8 +5,8 @@ module Opening
 			@font = Font.new(32)
 		end
 
-		def play
-			Window.draw_font(300, 300, "おーぷにんぐ", @font)
+		def play(score= nil)
+			Window.draw_font(300, 300, "オープニング", @font)
 			scene_transaction
 		end
 

@@ -15,8 +15,22 @@ class Fish < CPBox
 		@caught = false
  	end
 
-	def move
-	
+	def move(loop_count) 
+                if loop_count % 5 == 0
+		   apply_force(-@body.p.x / 2, 0)
+		end
+                if loop_count % 10 == 0
+		   apply_force(0, -@body.p.y / 2 )
+		end
+                #if loop_count % 260 + rand(50) == 0
+		#	   apply_force(0, -@body.p.y / 2 + 200)
+		#end
+                #if @loop_count % 130 + rand(50) == 0
+		#	   apply_force(, )
+		#end
+                #if @loop_count % 130 + rand(50) == 0
+		#	   apply_force(@body.p.x / 2 + 200, 0)
+		##end
 		if @body.p.x > Window.width - 100
 			@body.v = CP::Vec2.new(rand(-300),rand(-300))
 		elsif @body.p.x <   100

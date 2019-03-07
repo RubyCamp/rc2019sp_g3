@@ -23,7 +23,7 @@ end
 
 class CPBase
 
-  def self.generate_walls(space, width = 600, height = 400, wall_width = 20)
+  def self.generate_walls(space, width = 500, height = 500, wall_width = 20)
     walls = []
     walls << CPStaticBox.new(0, height, width, height + wall_width)
     walls << CPStaticBox.new(-wall_width, 0, 0, height)
@@ -35,14 +35,14 @@ class CPBase
     walls
   end
   
-  def self.walls
-    walls = []
-    walls << CPStaticBox.new(0, 768, 1024, 790)
-    walls << CPStaticBox.new(-20, 0, 0, 768)
-    walls << CPStaticBox.new(0, -20, 1024, 0)
-    walls << CPStaticBox.new(1024, 0, 1044, 768)
-    walls
-  end
+  #def self.walls
+    #walls = []
+    #walls << CPStaticBox.new(0, 768, 1024, 790)
+    #walls << CPStaticBox.new(-20, 0, 0, 768)
+    #walls << CPStaticBox.new(0, -20, 1024, 0)
+    #walls << CPStaticBox.new(1024, 0, 1044, 768)
+    #walls
+  #end
 
   def apply_force(x, y)
     body.apply_impulse(CP::Vec2.new(x, y), CP::Vec2.new(0, 0))
