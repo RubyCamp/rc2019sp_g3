@@ -51,10 +51,16 @@ module Game
 			
 			@player.move
 			@player.draw
+
+			p @player.p
+
 			@fishes.each do |fish|
 			#　金魚を動かす
 				fish.move
 				fish.draw
+				p fish.p
+				p (@player.p - fish.p)
+
 			end
 			Window.draw_font(0,0, "スコア：#{@score}, 時間:#{@limit_time}, #{@time}", @font)
 			@space_fish.step( 1/ 60.0 )
