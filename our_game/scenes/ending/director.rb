@@ -3,14 +3,14 @@ module Ending
     attr_accessor :score
 
     def initialize
-        @font = Font.new(32)
-        @boi_img = Image.load('images/poi1.png')
+        @font = Font.new(70)
+        @result_img = Image.load('images/resultscreen.png')
     end
 
     def play(score)
 
-        Window.draw(0, 0, @boi_img)
-        Window.draw_font(200, 200, "今回のスコア:#{score}", @font)
+        Window.draw(0, 0, @result_img)
+        Window.draw_font(90, 250, "今回のスコアは#{score}です", @font, {color: [0,0,0]})
         scene_transition
     end
 

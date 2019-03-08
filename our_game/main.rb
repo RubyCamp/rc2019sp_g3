@@ -25,11 +25,11 @@ Scene.add(Game::Director.new, :game)
 Scene.add(Ending::Director.new, :ending)
 Scene.add(Bending::Director.new, :bending)
 
+#始めにオープニング画面に遷移する
 Scene.move_to :opening
-op_music = Sound.new("sounds/opening.mid")
-op_music.play
 
 Window.loop do 
 	#break if Input.key_push?(K_ESCAPE)
 	Scene.play
+	#Scene.play_music
 end

@@ -1,14 +1,14 @@
 module Bending
 	class Director
 	   	def initialize
-	      	@font = Font.new(32)
-	      	@poi_img = Image.load('images/poi1.png')
+	      	@font = Font.new(70)
+	      	@bending_img = Image.load('images/badending.png')
 	   	end 
 	    
 		def play(score)
 			
-		    Window.draw(0,0,@poi_img)
-		    Window.draw_font(200, 200, "残念！ スコアは#{score}です！" , @font)
+		    Window.draw(0, 0, @bending_img)
+		    Window.draw_font(60, 300, "残念！ スコアは#{score}です！" , @font, { color: [255,0,0]})
 		    scene_transition(score)
 	   	end
 

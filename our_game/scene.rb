@@ -20,7 +20,11 @@ class Scene
 		if score != nil
 			@@ranking << score
 		end
-		p @@ranking
+		#p @@ranking
+	end
+
+	def self.play_music
+		@@scenes[@@current].play_music
 	end
 
 end

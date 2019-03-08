@@ -15,43 +15,43 @@ class Fish < CPBox
 		@caught = false
  	end
 
-	def move(loop_count) 
-                if loop_count % 5 == 0
-		   apply_force(-@body.p.x / 2, 0)
-		end
-                if loop_count % 10 == 0
-		   apply_force(0, -@body.p.y / 2 )
-		end
-                #if loop_count % 260 + rand(50) == 0
-		#	   apply_force(0, -@body.p.y / 2 + 200)
+	 def move(loop_count) 
+ #                if loop_count % 5 == 0
+	# 	   apply_force(-@body.p.x / 2, 0)
+	# 	end
+ #                if loop_count % 10 == 0
+	# 	   apply_force(0, -@body.p.y / 2 )
+	# 	end
+ #                #if loop_count % 260 + rand(50) == 0
+	# 	#	   apply_force(0, -@body.p.y / 2 + 200)
+	# 	#end
+ #                #if @loop_count % 130 + rand(50) == 0
+	# 	#	   apply_force(, )
+	# 	#end
+ #                #if @loop_count % 130 + rand(50) == 0
+	# 	#	   apply_force(@body.p.x / 2 + 200, 0)
 		#end
-                #if @loop_count % 130 + rand(50) == 0
-		#	   apply_force(, )
-		#end
-                #if @loop_count % 130 + rand(50) == 0
-		#	   apply_force(@body.p.x / 2 + 200, 0)
-		##end
-		if @body.p.x > Window.width - 100
+		if @body.p.x > Window.width -  30
 			@body.v = CP::Vec2.new(rand(-300),rand(-300))
-		elsif @body.p.x <   100
+		elsif @body.p.x <   30
 			@body.v = CP::Vec2.new(rand(300),rand(300))
-		elsif @body.p.y > Window.height - 100
-			@body.v = CP::Vec2.new(rand(100),-rand(300))
-		elsif @body.p.y < 100
+		elsif @body.p.y > Window.height - 30
+			@body.v = CP::Vec2.new(rand(-100),-rand(-300))
+		elsif @body.p.y < 30
 			@body.v = CP::Vec2.new(rand(300),rand(100))
 		end
-	end
-
-	#　物理空間で描画処理
-	# def draw
-	# 	Window.draw_rot(@body.p.x - @r , @body.p.y - @r ,@enemy_img, @body.a * 180 / Math::PI)
-	# end
+	 end
 
  #　プレイヤにダメージを与える
 	def attack
 		# if(処理)
 				#player_HP -= 5
 		#	else
+	end
+
+	#魚同士がよける処理
+	def avoid
+		@body.v *= 1.0001
 	end
 
 	#　すくわれたときに画像を変換する

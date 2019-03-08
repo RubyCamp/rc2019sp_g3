@@ -16,21 +16,27 @@ module Game
 			@fishes = []
 			@font = Font.new(32)
 			@score = 0
-			@limit_time = 100
+			@limit_time = 60
 			@loop_count = 1
 			@time = Time.now
 
+			#背景画像の読みk身
+			@back_iamge = Image.load("images/back.png")
+			#ポイ（プレイヤ）の作成
 			@image1 = Image.load("images/poi1.png")
 			#別のところで使いたいのでインスタンス変数にしておく
 			@image2 = Image.load("images/poi2.png")
-
+			#ゲーム時の音楽を読み込む
+			@game_music = Sound.new("sounds/opening.mid")
+			#@game_music.play
+			#残り時間が少なくなった時の音楽を読み込む
+			@danger_music = Sound.new("sounds/danger.mid")
 			#通常のポイを作成
 			@player= Player.new(30,300,50,10, @image1)
-
+			#物理空間にッ登録
 			@space_poi.add(@player)
 			#　1から10までの数の金魚を発生させる
-			# (rand(9)+1).times do
-			20.times do
+			(rand(12)+8).times do
 				fish = Fish.new(
 				  rand(600)+100,
 				  rand(400)+100,
@@ -54,9 +60,12 @@ module Game
 
 		def play(score= nil)
 
+			Window.draw(0,0,@back_iamge)
 			@player.move
 			@player.draw
 
+			list = []
+			
 			@fishes.each do |fish|
 				x = @player.body.p - fish.body.p
 				if x.length < 70
@@ -70,6 +79,16 @@ module Game
 						@space_fish.remove(fish)
 					end
 				end
+
+				@fishes.each do |fish2|
+					dist = (fish.body.v - fish2.body.v).length
+					list << dist
+					#配列の最初スチガ何番目かを検知
+					x = list.find_index(list.min)
+				end
+				#最も距離の短い魚が逃げる仕様？
+				@fishes[x].avoid
+			
 				fish.draw
 				fish.move(@loop_count)
 			end
@@ -77,8 +96,11 @@ module Game
 			#fishesから削除
 			@fishes.reject! {|fish| fish.caught?}
 
+			#距離の配列
+			
+
 			#スコアと時間の表示
-			Window.draw_font(0, 0, "スコア：#{@score}, 時間:#{@limit_time}", @font)
+			Window.draw_font(0, 0, "スコア：#{@score}, 時間:#{@limit_time}, ", @font)
 
 			@space_fish.step( 1 / 60.0 )
 			@space_poi.step( 1 / 60.0 )
@@ -88,8 +110,14 @@ module Game
 				@limit_time -= 1
 			end
 
+			#@game_music.play
 			#終了処理
 			scene_transition
+		end
+
+		def play_music
+			@game_music.loop_count = 2
+			@game_music.play
 		end
 
 	  	def draw
@@ -98,13 +126,13 @@ module Game
 
 	  	private
 	  	def scene_transition
-	  		if @score >= 70
+	  		if @score >= 100
   				Scene.move_to(:ending, @score)
   				@score = 0
   				@limit_time = 100
   				@player= Player.new(30,300,50,10, @image1)
 				@space_poi.add(@player)
-  			elsif @limit_time == 80
+  			elsif @limit_time <= 0
 				Scene.move_to(:bending, @score) 
 				@score = 0
 				@limit_time = 100
